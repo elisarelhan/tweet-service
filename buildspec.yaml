@@ -9,7 +9,7 @@ phases:
     - aws --version
     - aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 325145872274.dkr.ecr.us-west-2.amazonaws.com
     - IMAGE_NAME=tweetservice_902477
-    - IMAGE_URI=325145872274.dkr.ecr.us-east-1.amazonaws.com/tweetservice_902477:latest
+    - IMAGE_URI=325145872274.dkr.ecr.us-west-2.amazonaws.com/tweetservice_902477
     - CONTAINER_NAME=tweetservice_902477
   build:
     commands:
