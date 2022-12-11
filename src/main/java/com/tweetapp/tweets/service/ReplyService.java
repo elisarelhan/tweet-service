@@ -22,18 +22,18 @@ public class ReplyService {
 	@Autowired
 	private TweetRepo tweetRepo;
 
-	private static final String USER_CREATED_TOPIC = "tweet";
-	@Autowired
-	private KafkaTemplate<String, Reply> kafkaTemplate;
+// 	private static final String USER_CREATED_TOPIC = "tweet";
+// 	@Autowired
+// 	private KafkaTemplate<String, Reply> kafkaTemplate;
 
-	@Autowired
-	private KafkaTemplate<String, String> templateString;
+// 	@Autowired
+// 	private KafkaTemplate<String, String> templateString;
 
 	public Reply saveReply(int tweetId, Reply reply) {
 		Tweet tweet = tweetRepo.findByTweetIdOrderByUpdatedDateDesc(tweetId);
 		reply.setTweet(tweet);
 		Reply replyObj = replyRepo.save(reply);
-		templateString.send(USER_CREATED_TOPIC, "Reply posted");
+// 		templateString.send(USER_CREATED_TOPIC, "Reply posted");
 		return replyObj;
 
 //    }).orElseThrow(() -> new ResourceNotFoundException("PostId " + postId + " not found"));
@@ -50,7 +50,7 @@ public class ReplyService {
 	public void deleteReply(int replyId) {
 
 		replyRepo.deleteById(replyId);
-		templateString.send(USER_CREATED_TOPIC, "Deleted");
+// 		templateString.send(USER_CREATED_TOPIC, "Deleted");
 
 	}
 
