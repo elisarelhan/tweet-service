@@ -16,29 +16,29 @@ public class TweetService {
 	@Autowired
 	private TweetRepo tweetRepo;
 
-	private static final String USER_CREATED_TOPIC = "tweet";
-	@Autowired
-	private KafkaTemplate<String, Tweet> kafkaTemplate;
-	@Autowired
-	private KafkaTemplate<String, List<Tweet>> template;
-	@Autowired
-	private KafkaTemplate<String, String> templateString;
+// 	private static final String USER_CREATED_TOPIC = "tweet";
+// 	@Autowired
+// 	private KafkaTemplate<String, Tweet> kafkaTemplate;
+// 	@Autowired
+// 	private KafkaTemplate<String, List<Tweet>> template;
+// 	@Autowired
+// 	private KafkaTemplate<String, String> templateString;
 
 	public Tweet saveTweet(Tweet tweet) {
 		Tweet tweetObj = tweetRepo.save(tweet);
-		templateString.send(USER_CREATED_TOPIC, "Tweet posted");
+// 		templateString.send(USER_CREATED_TOPIC, "Tweet posted");
 		return tweetObj;
 	}
 
 	
 	public Tweet getTweet(int tweetId) {
 		if (tweetRepo.findByTweetIdOrderByUpdatedDateDesc(tweetId) == null) {
-			templateString.send(USER_CREATED_TOPIC, "Tweet Not Found");
+// 			templateString.send(USER_CREATED_TOPIC, "Tweet Not Found");
 			throw new ResourceNotFoundException("Tweet Not Found");
 
 		} else {
 			Tweet tweetObj = tweetRepo.findByTweetIdOrderByUpdatedDateDesc(tweetId);
-			kafkaTemplate.send(USER_CREATED_TOPIC, tweetObj);
+// 			kafkaTemplate.send(USER_CREATED_TOPIC, tweetObj);
 			return tweetObj;
 		}
 	}
@@ -46,11 +46,11 @@ public class TweetService {
 	public List<Tweet> getAllTweets() {
 
 		if (tweetRepo.findAllTweetsOrderByUpdatedDateDesc().isEmpty()) {
-			templateString.send(USER_CREATED_TOPIC, "No Tweets Found");
+// 			templateString.send(USER_CREATED_TOPIC, "No Tweets Found");
 			throw new ResourceNotFoundException("No Tweets Found");
 		} else {
 			List<Tweet> tweetObj = tweetRepo.findAllTweetsOrderByUpdatedDateDesc();
-			template.send(USER_CREATED_TOPIC, tweetObj);
+// 			template.send(USER_CREATED_TOPIC, tweetObj);
 			return tweetObj;
 
 		}
@@ -61,11 +61,11 @@ public class TweetService {
 
 	
 		if (tweetRepo.findByUserEmailOrderByUpdatedDateDesc(email).isEmpty()) {
-			templateString.send(USER_CREATED_TOPIC, "No Tweets Found");
+// 			templateString.send(USER_CREATED_TOPIC, "No Tweets Found");
 			throw new ResourceNotFoundException("No Tweets Found");
 		} else {
 			List<Tweet> tweetObj = tweetRepo.findByUserEmailOrderByUpdatedDateDesc(email);
-			template.send(USER_CREATED_TOPIC, tweetObj);
+// 			template.send(USER_CREATED_TOPIC, tweetObj);
 			return tweetObj;
 		}
 
@@ -78,7 +78,7 @@ public class TweetService {
 
 		tweet.setTweetContent(tweetContent);
 		Tweet tweetObj = tweetRepo.save(tweet);
-		templateString.send(USER_CREATED_TOPIC, "Tweet Updated");
+// 		templateString.send(USER_CREATED_TOPIC, "Tweet Updated");
 		return tweetObj;
 
 	}
@@ -88,13 +88,13 @@ public class TweetService {
 		tweet.setLikes(likes);
 
 		Tweet tweetObj = tweetRepo.save(tweet);
-		templateString.send(USER_CREATED_TOPIC, "Likes updated");
+// 		templateString.send(USER_CREATED_TOPIC, "Likes updated");
 		return tweetObj;
 	}
 
 	public void deleteTweet(int tweetId) {
 		tweetRepo.deleteById(tweetId);
-		templateString.send(USER_CREATED_TOPIC, "Deleted");
+// 		templateString.send(USER_CREATED_TOPIC, "Deleted");
 
 	}
 
